@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Disease Predictor</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Animate.css CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body>
+  <!-- Hero Section -->
+  <header class="header">
+    <div class="header-content animate-fadeIn">
+      <img src="{{ url_for('static', filename='images/disease-icon.png') }}" alt="Icon" class="mx-auto mb-4 w-16 h-16 animate__animated animate__bounceIn" />
+      <h1 class="text-4xl font-extrabold">Disease Prediction App</h1>
+      <p class="mt-2 text-lg">Select your symptoms below to see the predicted disease</p>
+    </div>
+  </header>
+
+  <!-- Form Card -->
+  <main class="container mx-auto px-4 pb-8">
+    <div class="card mx-auto max-w-3xl animate-fadeIn">
+      <form method="POST" class="space-y-4">
+        {% for i in range(1, 18) %}
+        <div class="flex flex-col">
+          <label for="symptom{{ i }}" class="font-medium">Symptom {{ i }}:</label>
+          <select id="symptom{{ i }}" name="symptom{{ i }}" class="select-input">
+            <option value="">-- Select Symptom --</option>
+            {% for symptom in symptom_list %}
+            <option value="{{ symptom }}" {% if request.form.get('symptom' ~ i)==symptom %}selected{% endif %}>
+              {{ symptom | capitalize }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endfor %}
+        <div class="text-center mt-6">
+          <button type="submit" class="button animate__animated animate__pulse animate__infinite">Predict</button>
+        </div>
+      </form>
+
+      {% if prediction %}
+      <div class="mt-6 bg-green-50 border-l-4 border-green-400 p-4 animate__animated animate__fadeInDown">
+        <p class="font-semibold text-green-800">Predicted Disease: <span class="text-lg">{{ prediction }}</span></p>
+      </div>
+      {% endif %}
+    </div>
+  </main>
+</body>
+</html>

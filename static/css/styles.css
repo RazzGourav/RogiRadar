@@ -1,0 +1,42 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f7fa;
+  }
+  .header {
+    background: url('../images/hero.jpg') no-repeat center/cover;
+    height: 300px;
+    position: relative;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+  }
+  .header-content {
+    position: relative;
+    z-index: 10;
+    color: white;
+    text-align: center;
+    padding-top: 100px;
+  }
+  .card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 2rem;
+    margin-top: -80px;
+  }
+  .select-input {
+    @apply w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400;
+  }
+  .button {
+    @apply bg-green-500 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:bg-green-600;
+  }
+  .animate-fadeIn {
+    animation: fadeIn 1.2s ease-in-out;
+  }
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }

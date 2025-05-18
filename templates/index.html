@@ -1,0 +1,137 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   RogiRadar
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+ </head>
+ <body class="flex flex-col min-h-screen bg-gray-50">
+  <!-- Header -->
+  <header class="bg-white shadow-md">
+   <div class="container mx-auto px-6 py-5 flex flex-col md:flex-row items-center justify-between">
+    <div class="flex items-center space-x-3">
+     <img alt="Medical stethoscope icon in blue and white style" class="w-12 h-12" height="48" src="https://storage.googleapis.com/a1aa/image/26c4ab27-54aa-4c9a-eb8e-68070af948a5.jpg" width="48"/>
+     <h1 class="text-2xl md:text-3xl font-extrabold text-blue-700">
+     RogiRadar
+     </h1>
+    </div>
+    <nav class="mt-4 md:mt-0">
+     <ul class="flex space-x-6 text-gray-700 font-semibold text-sm md:text-base">
+      <li>
+       <a class="hover:text-blue-600 transition" href="#about">
+        About
+       </a>
+      </li>
+      <li>
+       <a class="hover:text-blue-600 transition" href="#prediction">
+        Predict
+       </a>
+      </li>
+      <li>
+       <a class="hover:text-blue-600 transition" href="#footer">
+        Contact
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <!-- About Section -->
+  <section class="container mx-auto px-6 py-12 md:py-20 max-w-5xl" id="about">
+   <div class="flex flex-col md:flex-row items-center md:space-x-12">
+    <img alt="Doctor consulting a patient in a modern clinic with medical charts and equipment" class="rounded-lg shadow-lg w-full md:w-1/2 mb-8 md:mb-0" height="300" src="https://storage.googleapis.com/a1aa/image/1654722e-c652-4c3c-0f78-b4d4f2f43be5.jpg" width="400"/>
+    <div>
+     <h2 class="text-3xl font-extrabold text-blue-700 mb-4">
+      About Disease Prediction
+     </h2>
+     <p class="text-gray-700 leading-relaxed text-lg">
+      Our Disease Prediction platform empowers you to take charge of your health by 
+      identifying potential conditions based on 18 common symptoms you choose. While our ML‑driven 
+      analysis offers insights to help you understand what might be affecting you, it is not a substitute for professional medical advice. The results are intended as a preliminary guide to encourage timely consultation with a qualified healthcare provider. Please use this tool responsibly and always seek a doctor’s evaluation for an accurate diagnosis and treatment plan.
+    </p>
+    </div>
+   </div>
+  </section>
+  <!-- Prediction Form Section -->
+  <main class="flex-grow container mx-auto px-6 pb-16 max-w-4xl" id="prediction">
+   <div class="bg-white rounded-lg shadow-lg p-8">
+    <h3 class="text-2xl font-bold text-blue-700 mb-6 text-center">
+     Select Your Symptoms
+    </h3>
+    <form class="grid grid-cols-1 sm:grid-cols-2 gap-6" method="POST">
+  {% for i in range(1, 19) %}
+    <div class="flex flex-col">
+      <label class="mb-2 font-semibold text-gray-700" for="symptom{{ i }}">
+        Symptom {{ i }}
+      </label>
+      <select class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" id="symptom{{ i }}" name="symptom{{ i }}">
+        <option value="">--Select Symptom--</option>
+        {% for symptom in symptom_list %}
+          <option value="{{ symptom }}" {% if request.form.get('symptom' ~ i) == symptom %}selected{% endif %}>
+            {{ symptom }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+  {% endfor %}
+  <div class="col-span-full text-center mt-8">
+    <button class="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-8 py-3 rounded-md shadow-md transition focus:outline-none focus:ring-4 focus:ring-blue-300" type="submit" value="Predict">
+      <i class="fas fa-stethoscope mr-2"></i>
+      Predict Disease
+    </button>
+  </div>
+</form>
+{% if prediction %}
+    <h3>Predicted Disease: {{ prediction }}</h3>
+    {% endif %}
+    <!-- Example prediction output area -->
+    <!-- This block should be dynamically rendered by backend -->
+    <div class="mt-10 bg-green-50 border-l-4 border-green-400 p-5 rounded-md shadow-md hidden" id="prediction-result">
+     <p class="text-green-800 font-semibold text-lg">
+      Predicted Disease:
+      <span class="font-extrabold text-xl">
+       Influenza
+      </span>
+     </p>
+    </div>
+   </div>
+  </main>
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-200 mt-auto" id="footer">
+   <div class="container mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center text-gray-600 text-sm">
+    <p>
+     © 2025 RogiRadar. All rights reserved.
+    </p>
+    <div class="flex space-x-6 mt-4 md:mt-0">
+     <a class="hover:text-blue-600 transition flex items-center" href="mailto:contact@diseasepredictor.com">
+      <i class="fas fa-envelope mr-2">
+      </i>
+      gouravojha777@gmail.com
+     </a>
+     <a class="hover:text-blue-600 transition" href="https://x.com/RazzGourav" rel="noopener" target="_blank">
+      <i class="fab fa-twitter fa-lg">
+      </i>
+     </a>
+     <a class="hover:text-blue-600 transition" href="https://facebook.com/diseasepredictor" rel="noopener" target="_blank">
+      <i class="fab fa-facebook fa-lg">
+      </i>
+     </a>
+     <a class="hover:text-blue-600 transition" href="https://www.linkedin.com/in/gourav-kumar-ojha-13853b290/" rel="noopener" target="_blank">
+      <i class="fab fa-linkedin fa-lg">
+      </i>
+     </a>
+    </div>
+   </div>
+  </footer>
+ </body>
+</html>
