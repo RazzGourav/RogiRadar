@@ -36,4 +36,5 @@ def index():
 
     # Render the template with symptom_list and prediction if any
     return render_template('index.html', symptom_list=symptom_list, prediction=prediction)
-
+if __name__ == '__main__':
+    app.run(debug=True)
